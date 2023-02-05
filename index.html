@@ -15,40 +15,31 @@
   <!-- Search function -->
   <div class="row">
     <div class="col-4 bg-light">
-        <div class="mt-2">City search:</div>
+        <div class="mt-2">Search for a City:</div>
         <div class="input-group mb-3">
-            <input type="text" id="city" class="form-control">
-            <div>
-              <button type ="button" class="btn btn-primary" id="searchCity">Search</button><!-- search button-->
-            </div>
+          <input type="text" id="city" class="form-control" placeholder="City"> <!--city input-->
+          <button type ="button" class="btn btn-primary" id="searchCity">Search</button><!-- search button-->
+        </div>
+            
     
     <!-- When searched, need to add button of last city (pulled from local storage) -->
+      <div class="list-group" id ="cityList">Placeholder  </div>
   </div>
-  <!-- Same concept for current day -->
-  <section id="currentDay">
-<p>This is the current day</p>
-  </section>
+  <!-- Need to add in JavaScript so "cards"/divs will be generated when info is pulled -->
+  <div class="card">
+    <div class="card-body" id = "currentDay">
+      This is the current day
+    </div>
+  </div>
   <section class="container my-5 bg-dark text-light justify-content-around">
-    <!-- Need to add in JavaScript so "cards"/divs will be generated when info is pulled-->
+    <!-- Same concept for next 5 days -->
     <div class="row">
-      <div id="day-1" class="col-12 col-md-6 col-lg-2">
-      this is day 1
-      </div>
-      <div id="day-2" class="col-12 col-md-6 col-lg-2">
-      this is day 2
-      </div>
-      <div id="day-3" class="col-12 col-md-6 col-lg-2">
-      this is day 3 
-      </div>
-      <div id="day-4" class="col-12 col-md-6 col-lg-2">
-      this is day 4  
-      </div>
-      <div id="day-5" class="col-12 col-md-6 col-lg-2">
-      this is day 5  
+      <div id = "fiveDays" class = "row">
+        fiveDays
       </div>
     </div>
   </section>
   
-  <script src="/assets/script.js"></script>
+  <script src="assets/script.js"></script>
 </body>
 </html>
