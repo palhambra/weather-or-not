@@ -6,13 +6,16 @@
 var searchHistory = [];
 var cityValue
 var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&appid=8797da62fb3f32e8d04f561117825f15";
-
+var currentDay = document.getElementById("currentDay");
+var conditions
+var icon = document.getElementById("icon");
 // When search button is pressed, will make one big div of current day. And 5 smaller divs/cards of next 5 days
 
 
 // Function that grabs input from text when button is clicked
 
 document.getElementById("searchCity").addEventListener("click", function(){
+  
   var city = document.getElementById("city");
   var cityValue = city.value;
 console.log(cityValue);
@@ -30,10 +33,32 @@ fetch(cityUrl)
     console.log(data);
     console.log(data.city.name)
     
-    for (var i = 0; i < 6; i++) {
-      console.log('Temp: ' + data.list[i].main.temp + ' degrees');
+    for (var i = 0; i < data.list.length; i++) {
+      
+       if (i === 0) {
+         console.log(i);
+         console.log(data.list[i].dt_txt);
+         h2Text = document.querySelector("h2");
+         h2Text.textContent = data.city.name + " " + data.list[0].dt_txt;
+         pText = document.querySelector("p");
+         pText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
+         pText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
+         icon.src = `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`;
+         console.log(`http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`)
+         console.log('https://openweathermap.org/img/wn/04d@2x.png')
+         console.log('Temp: ' + data.list[i].main.temp + ' \u00B0F');
+         console.log('Wind: ' + data.list[i].wind.speed + ' mph');
+         console.log('Humidity: ' + data.list[i].main.humidity + ' %');
+
+       } else if (i === 8 || i === 16 || i === 24 || i === 32){
+        console.log(i);
+      console.log(data.list[i].dt_txt);
+      
+      console.log('icon ' + data.list[i].weather[0].icon)
+      console.log('Temp: ' + data.list[i].main.temp + ' \u00B0F');
       console.log('Wind: ' + data.list[i].wind.speed + ' mph');
       console.log('Humidity: ' + data.list[i].main.humidity + ' %')
+       }
     }
   });
 
