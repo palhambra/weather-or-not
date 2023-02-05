@@ -40,9 +40,12 @@ fetch(cityUrl)
          console.log(data.list[i].dt_txt);
          h2Text = document.querySelector("h2");
          h2Text.textContent = data.city.name + " " + data.list[0].dt_txt;
-         pText = document.querySelector("p");
-         pText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
-         pText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
+         tempText = document.getElementById("temp");
+         windText = document.getElementById("wind");
+         humidityText = document.getElementById("humidity");
+         tempText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
+         windText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
+         humidityText.textContent = 'Humidity: ' + data.list[i].main.humidity + ' %'
          icon.src = `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`;
          console.log(`http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`)
          console.log('https://openweathermap.org/img/wn/04d@2x.png')
@@ -51,13 +54,26 @@ fetch(cityUrl)
          console.log('Humidity: ' + data.list[i].main.humidity + ' %');
 
        } else if (i === 8 || i === 16 || i === 24 || i === 32){
+        
+          
+          h5Text = document.getElementById("day"+(i/8))
+          h5Text.textContent = data.list[i].dt_txt;
+          tempText = document.getElementById("temp"+(i/8));
+          windText = document.getElementById("wind"+(i/8));
+          humidityText = document.getElementById("humidity"+(i/8));
+          tempText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
+          windText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
+          humidityText.textContent = 'Humidity: ' + data.list[i].main.humidity + ' %'
+          icon = document.getElementById("icon"+(i/8));
+          icon.src = `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`;
+          console.log(h5Text);
         console.log(i);
-      console.log(data.list[i].dt_txt);
-      
-      console.log('icon ' + data.list[i].weather[0].icon)
-      console.log('Temp: ' + data.list[i].main.temp + ' \u00B0F');
-      console.log('Wind: ' + data.list[i].wind.speed + ' mph');
-      console.log('Humidity: ' + data.list[i].main.humidity + ' %')
+        console.log(data.list[i].dt_txt);
+        console.log('icon ' + data.list[i].weather[0].icon);
+        console.log('Temp: ' + data.list[i].main.temp + ' \u00B0F');
+        console.log('Wind: ' + data.list[i].wind.speed + ' mph');
+        console.log('Humidity: ' + data.list[i].main.humidity + ' %');
+        
        }
     }
   });
