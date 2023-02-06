@@ -32,9 +32,17 @@ fetch(cityUrl)
   .then(function (data) {
     console.log(data);
     console.log(data.city.name)
-    
-    for (var i = 0; i < data.list.length; i++) {
+    const weatherData = {
+      temperature: data.list[0].main.temp,
+      location: data.city.name,
+      wind: data.list[0].wind.speed,
+      humidity: data.list[0].main.humidity
       
+    };
+    localStorage.setItem('weatherData', JSON.stringify(weatherData));
+    console.log(weatherData)
+    for (var i = 0; i < data.list.length; i++) {
+      // Current day main card
        if (i === 0) {
          console.log(i);
          console.log(data.list[i].dt_txt);
@@ -54,7 +62,7 @@ fetch(cityUrl)
          console.log('Humidity: ' + data.list[i].main.humidity + ' %');
 
        } else if (i === 8 || i === 16 || i === 24 || i === 32){
-        
+        // Next 4 days
           
           h5Text = document.getElementById("day"+(i/8))
           h5Text.textContent = data.list[i].dt_txt;
