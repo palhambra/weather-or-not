@@ -5,3 +5,4 @@ In this project, we had to make a weather dashboard using a third-party API call
 
 ![This will resemble the mock-up located in the challenge README.md](assets/Screenshot%202023-02-06%20231006.png)
 
+(https://palhambra.github.io/weather-or-not/)
