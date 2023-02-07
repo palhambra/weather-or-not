@@ -87,11 +87,11 @@ function fetchWeather() {
 
 };
 
-
+// When button on city history is clicked, will bring back old city
 cityList.addEventListener("click", function (event) {
-  var btn = event.target;
-  if (btn.nodeName === "BUTTON") {
-    city.value = btn.textContent;
+  var butn = event.target;
+  if (butn.nodeName === "BUTTON") {
+    city.value = butn.textContent;
     fetchWeather();
   }
 });
