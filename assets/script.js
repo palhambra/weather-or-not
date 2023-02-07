@@ -4,8 +4,9 @@
 
 
 var searchHistory = localStorage.getItem("weatherData");
-var cityValue
-var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&appid=8797da62fb3f32e8d04f561117825f15";
+var city = document.getElementById("city");
+var cityValue = city.value;
+var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&units=imperial&appid=8797da62fb3f32e8d04f561117825f15";
 var currentDay = document.getElementById("currentDay");
 var conditions
 var icon = document.getElementById("icon");
@@ -16,122 +17,83 @@ var icon = document.getElementById("icon");
 
 // Function that grabs input from text when button is clicked
 
-document.getElementById("searchCity").addEventListener("click", function(){
-  
-  var city = document.getElementById("city");
+document.getElementById("searchCity").addEventListener("click", function () {
+
+
   var cityValue = city.value;
-  console.log(cityValue);
+
   var btn = document.createElement("button");
   btn.textContent = cityValue;
   var cityList = document.getElementById("cityList");
   var item = document.createElement("li");
-  item.appendChild(btn);
+
   cityList.appendChild(item);
-// Add api link for weather
-var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&units=imperial&appid=8797da62fb3f32e8d04f561117825f15";
-console.log(cityUrl);
+  item.appendChild(btn);
+  btn.classList.add("list-group-item", "list-group-item-action")
+  // Add api link for weather
+  var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&units=imperial&appid=8797da62fb3f32e8d04f561117825f15";
+  console.log(cityUrl);
+  fetchWeather();
+});
 
-fetch(cityUrl)
-  .then(function (response) {
-    return response.json();
-  })
-  
-  .then(function (data) {
-    // console.log(data);
-    // console.log(data.city.name)
-    localStorage.setItem("weatherData", JSON.stringify(data));
-    
-    for (var i = 0; i < data.list.length; i++) {
-      // Current day main card
-       if (i === 0) {
-        //  console.log(i);
-        //  console.log(data.list[i].dt_txt);
-         h2Text = document.querySelector("h2");
-         h2Text.textContent = data.city.name + " " + data.list[0].dt_txt;
-         tempText = document.getElementById("temp");
-         windText = document.getElementById("wind");
-         humidityText = document.getElementById("humidity");
-         tempText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
-         windText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
-         humidityText.textContent = 'Humidity: ' + data.list[i].main.humidity + ' %'
-         icon.src = `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`;
-        //  console.log(`http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`)
-        //  console.log('https://openweathermap.org/img/wn/04d@2x.png')
-        //  console.log('Temp: ' + data.list[i].main.temp + ' \u00B0F');
-        //  console.log('Wind: ' + data.list[i].wind.speed + ' mph');
-        //  console.log('Humidity: ' + data.list[i].main.humidity + ' %');
+function fetchWeather() {
+  var city = document.getElementById("city");
+  var cityValue = city.value;
+  var cityUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityValue + "&units=imperial&appid=8797da62fb3f32e8d04f561117825f15";
 
-       } else if (i === 8 || i === 16 || i === 24 || i === 32){
-        // Next 4 days
-          
-          h5Text = document.getElementById("day"+(i/8))
-          h5Text.textContent = data.list[i].dt_txt;
-          tempText = document.getElementById("temp"+(i/8));
-          windText = document.getElementById("wind"+(i/8));
-          humidityText = document.getElementById("humidity"+(i/8));
+
+  fetch(cityUrl)
+    .then(function (response) {
+      return response.json();
+    })
+
+    .then(function (data) {
+
+      localStorage.setItem("weatherData", JSON.stringify(data));
+
+      for (var i = 0; i < data.list.length; i++) {
+        // Current day main card
+        if (i === 0) {
+
+          h2Text = document.querySelector("h2");
+          h2Text.textContent = data.city.name + " " + data.list[0].dt_txt;
+          tempText = document.getElementById("temp");
+          windText = document.getElementById("wind");
+          humidityText = document.getElementById("humidity");
           tempText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
           windText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
           humidityText.textContent = 'Humidity: ' + data.list[i].main.humidity + ' %'
-          icon = document.getElementById("icon"+(i/8));
           icon.src = `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`;
-        //   console.log(h5Text);
-        // console.log(i);
-        // console.log(data.list[i].dt_txt);
-        // console.log('icon ' + data.list[i].weather[0].icon);
-        // console.log('Temp: ' + data.list[i].main.temp + ' \u00B0F');
-        // console.log('Wind: ' + data.list[i].wind.speed + ' mph');
-        // console.log('Humidity: ' + data.list[i].main.humidity + ' %');
-        
-       }
-    }
-  });
 
+
+        } else if (i === 8 || i === 16 || i === 24 || i === 32) {
+          // Next 4 days
+
+          h5Text = document.getElementById("day" + (i / 8))
+          h5Text.textContent = data.list[i].dt_txt;
+          tempText = document.getElementById("temp" + (i / 8));
+          windText = document.getElementById("wind" + (i / 8));
+          humidityText = document.getElementById("humidity" + (i / 8));
+          tempText.textContent = 'Temp: ' + data.list[i].main.temp + ' \u00B0F';
+          windText.textContent = 'Wind: ' + data.list[i].wind.speed + ' mph';
+          humidityText.textContent = 'Humidity: ' + data.list[i].main.humidity + ' %'
+          icon = document.getElementById("icon" + (i / 8));
+          icon.src = `http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png`;
+
+
+        }
+      }
+    });
+
+};
+
+
+cityList.addEventListener("click", function (event) {
+  var btn = event.target;
+  if (btn.nodeName === "BUTTON") {
+    city.value = btn.textContent;
+    fetchWeather();
+  }
 });
 
-
-
-// When search button is pressed, take text input, parse JSON, and set response to local storage
-// function getWeather(city) {
-//   city = cityValue;
-// fetch(cityUrl)
-// .then(function(response) {
-//   return response.json();
-// })
-// .then(function (data){
-//   console.log('Temp is')
-//   for (var i = 0; i < data.length; i++){
-//     console.log(data[i].temp)
-//     console.log('yes')
-//   }
-// });
-
-// }
-
-// var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?q=seattle&appid=8797da62fb3f32e8d04f561117825f15";
-
-// fetch(cityUrl)
-//   .then(function (response) {
-//     return response.json();
-//   })
-//   // .then parse(data)
-//   .then(function (data) {
-//     console.log(data);
-//     console.log(data.city.name)
-    
-//     for (var i = 0; i < 6; i++) {
-//       console.log(data.list[i].main.temp + ' degrees');
-//       console.log(data.list[i].wind.speed + ' mph');
-//     }
-//   });
-
-
-
-// // // const weatherData = {
-    // // //   temperature: data.list[0].main.temp,
-    // // //   location: data.city.name,
-    // // //   wind: data.list[0].wind.speed,
-    // // //   humidity: data.list[0].main.humidity
-      
-    // // };
-    // // localStorage.setItem('weatherData', JSON.stringify(weatherData));
-    // console.log(weatherData)
+ 
